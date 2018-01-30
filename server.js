@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const MongoClient = require('mongodb').MongoClient
+const MongoUser = process.env.CRUD_TEST_USER
+const MongoPass = process.env.CRUD_TEST_PASS
 
 // bodyParser middleware changes req or res before our app handles it
 // otherwise, submitted forms will give us input of undefined
@@ -13,7 +15,7 @@ app.use(express.static('public'))
 
 var db;
 
-MongoClient.connect('mongodb://hianson:ansoniscool@ds117848.mlab.com:17848/crud-tester', (err, database) => {
+MongoClient.connect(`mongodb://${MongoUser}:${MongoPass}@ds117848.mlab.com:17848/crud-tester`, (err, database) => {
   if (err) return console.log(err)
   db = database.db('crud-tester')
   app.listen(3000, () => {
